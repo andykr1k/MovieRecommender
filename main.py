@@ -2,9 +2,11 @@ import streamlit as st
 import recommend
 import requests
 import json
+import pandas as pd
+import numpy as np
 
 def recommend_request(film_type, movie, platforms):
-    base = 'http://127.0.0.1:5000/recommend/'
+    base = 'http://ec2-3-142-237-230.us-east-2.compute.amazonaws.com:8080/recommend/'
     url = base + film_type + '/' + movie + '/'
     platforms_string = ''
     for platform in range(len(platforms)):
@@ -81,9 +83,10 @@ def main():
     if st.button('Recommend Movie'):
         r = recommend_request(film_type, movie, platforms)
         j = json.loads(r.text)
-
-        st.write(j['recommendations'])
-        st.write("Confidence: ", j['accuracy'])
+        df = pd.DataFrame(j['recommendations'], columns=['Recommended Movies'])
+        df.index = np.arange(1, len(df) + 1)
+        st.dataframe(df, use_container_width=True)
+        # st.write("Confidence: ", j['accuracy'])
 
 if __name__ == '__main__':
     main()
