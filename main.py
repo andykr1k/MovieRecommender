@@ -63,7 +63,7 @@ def main():
     <div id="page-container">
 
     <div class="footer">
-    <p style='font-size: 0.875em;'>Made with
+    <p style='font-size: 0.875em;'>Made
     with <img src="https://em-content.zobj.net/source/skype/289/red-heart_2764-fe0f.png" alt="heart" height= "10"/>&nbsp;by <a style='display: inline; text-align: left;' href="https://github.com/andykr1k/Picturelock" target="_blank">PictureLock</a></p>
     </div>
 
