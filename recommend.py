@@ -23,6 +23,12 @@ def read():
 
     movies_df = netflix_movies_df._append(amazon_movies_df, ignore_index = True)._append(hulu_movies_df, ignore_index = True)._append(hbo_movies_df, ignore_index = True)._append(paramount_movies_df, ignore_index = True)._append(disney_movies_df, ignore_index = True)
 
+    movies_df = movies_df[movies_df['production_countries'] == '[\'US\']']
+
+    movies_df['production_countries'] = movies_df['production_countries'].str.replace('[', '')
+    movies_df['production_countries'] = movies_df['production_countries'].str.replace(']', '')
+    movies_df['production_countries'] = movies_df['production_countries'].str.replace('\'', '')
+
     movies_df = movies_df[['id', 'title', 'type', 'description', 'genres', 'platform']]
 
     movies_df.dropna(inplace=True)
