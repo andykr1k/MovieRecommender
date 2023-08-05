@@ -1,5 +1,20 @@
 import streamlit as st
 import recommend
+import requests
+import json
+
+def recommend_request(film_type, movie, platforms):
+    base = 'http://127.0.0.1:5000/recommend/'
+    url = base + film_type + '/' + movie + '/'
+    platforms_string = ''
+    for platform in range(len(platforms)):
+        platforms_string += platforms[platform]
+        if platform != len(platforms) - 1:
+            platforms_string += '-'
+    url = url + platforms_string
+    print("URL: " + url)
+    r = requests.get(url)
+    return r
 
 def main():
     st.set_page_config(page_title="PictureLock", page_icon="🎞️", menu_items=None)
@@ -56,7 +71,7 @@ def main():
     """
     st.write(ft, unsafe_allow_html=True)
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-    
+
     movies_df = recommend.read()
 
     film_type = st.selectbox('Movie or TV Show?', ['MOVIE', 'SHOW'])
@@ -64,10 +79,11 @@ def main():
     movie = st.selectbox('Select Similar Movie', movies_df['title'])
 
     if st.button('Recommend Movie'):
-        recommends, acc = recommend.main(film_type,movie,platforms)
+        r = recommend_request(film_type, movie, platforms)
+        j = json.loads(r.text)
 
-        st.write(recommends)
-        st.write("Confidence: ", acc)
+        st.write(j['recommendations'])
+        st.write("Confidence: ", j['accuracy'])
 
 if __name__ == '__main__':
     main()
