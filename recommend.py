@@ -40,8 +40,6 @@ def read():
 def train(movies_df):
     cv = CountVectorizer(max_features=50000,stop_words='english')
 
-    cv.fit_transform(movies_df['description']).toarray().shape
-
     vectors = cv.fit_transform(movies_df['description']).toarray()
 
     ps = PorterStemmer()

@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 def recommend_request(film_type, movie, platforms):
-    base = 'http://ec2-3-142-237-230.us-east-2.compute.amazonaws.com:8080/recommend/'
+    base = 'http://ec2-52-14-147-22.us-east-2.compute.amazonaws.com:8080/recommend/'
     url = base + film_type + '/' + movie + '/'
     platforms_string = ''
     for platform in range(len(platforms)):
